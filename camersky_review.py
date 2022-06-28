@@ -1,12 +1,12 @@
 import os
 
 from time import sleep
-from tkinter import tk
+import tkinter as tk
 from pathlib import Path
-from PIL import Image
+#from PIL import Image
 
 
-from picamera import PiCamera
+#from picamera import PiCamera
 
 DIR_PATH = "Fotki"
 
@@ -60,15 +60,26 @@ def Show_photo(): #don't start name of function with up letter - only small
 
 def DEL(): #This function is stupid - I made 100 pictures and I want keep all except one but I lost all pictures. Why?
     for f in os.listdir(DIR_PATH): #os.pathlib
-        os.remove(os.path.join(DIR_PATH,f)) #os.pathlib. What happen if user can not remove picture?
+        os.remove(os.path.join(DIR_PATH, f)) #os.pathlib. What happen if user can not remove picture?
 
 # photo label
 
 root = tk.Tk()
-root.geometry('600x400') #ugh, why? Use winfo_screenwidth and winfo_screenheight instead using hardcoded value. Or is any reason for this?
+
+window_width = 600
+window_height = 300
+
+screen_height = root.winfo_screenheight()
+screen_width = root.winfo_screenwidth()
+
+center_x = int(screen_width/2 - window_width / 2)
+center_y = int(screen_height/2 - window_height / 2)
+
+root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}') #ugh, why? Use winfo_screenwidth and winfo_screenheight instead using hardcoded value. Or is any reason for this?
 root.resizable(True, True)
 root.title('Do a photo')
 root.configure(bg="blue")
+# root.attributes('-alpha',1)
 
 # photo button
 img_button = tk.Button(
@@ -81,8 +92,8 @@ img_button = tk.Button(
     command=jd
 )
 img_button.pack(
-    ipadx=5, #ugh, why not winfo_screenwidth and divide by any value? You create very small button
-    ipady=5, # the same
+    ipadx=screen_width/10,
+    ipady=5,
     expand=True
 )
 
@@ -99,8 +110,9 @@ show_button = tk.Button(
 
 )
 show_button.pack(
-    ipadx=5, #the same like earlier
-    ipady=5 #the same like earlier
+    ipadx=5,
+    ipady=5,
+    expand=True
 )
 # Delete button
 del_button = tk.Button(
@@ -113,8 +125,8 @@ del_button = tk.Button(
     command=DEL
 )
 del_button.pack(
-    ipadx=5, #the same like earlier
-    ipady=5, #the same like earlier
+    ipadx=5,
+    ipady=5,
     expand=True
 )
 
@@ -130,8 +142,8 @@ exit_button = tk.Button(
 )
 
 exit_button.pack(
-    ipadx=5, #the same like earlier
-    ipady=5, #the same like earlier
+    ipadx=5,
+    ipady=5,
     expand=True
 )
 
