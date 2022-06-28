@@ -135,9 +135,9 @@ exit_button.pack(
     expand=True
 )
 
-root.mainloop() #technically this is correct why but in python the much better is:
-# if __name__ == "__main__":
-#     root.mainloop()
+if __name__ == "__main__":
+    root.mainloop()
+
 
 # this is very simple script - please move all of this to class object - it will be more friendly :)
 # please migrate ALL print to toast
