@@ -1,7 +1,7 @@
 from time import sleep
 import tkinter as tk
 from pathlib import Path
-# from PIL import Image
+from PIL import Image, ImageTk
 
 # from picamera import PiCamera
 
@@ -24,9 +24,6 @@ def jd():
     for path in DIR_PATH.iterdir():
         # if DIR_PATH.is_file():
         count += 1
-            
-
-
 
     # Make a Photo
 
@@ -35,7 +32,6 @@ def jd():
     camera.contrast = 10
     sleep(2) #from time import sleep
 
-
     camera.capture(f"./Fotki/Twoje_Foto{count + 1}.jpg") 
     print("Done.")
     camera.stop_preview()
@@ -43,8 +39,31 @@ def jd():
 
 # show photo function
 def show_photo(): 
-    img = Image.open(f"./Fotki/Twoje_Foto{count + 1}.jpg")
-    img.show()
+
+    # img = Image.open(f"./Fotki/Twoje_Foto{count + 1}.jpg")
+    # img.show()
+
+    image = Image.open(f"./Fotki/Twoje_Foto{count + 1}.jpg")
+    resize_img = image.resize((600,600))
+    img = ImageTk.PhotoImage(resize_img)
+    disp_img.config(image=img)
+    disp_img.image = img
+
+    # Checkbutton
+
+    CheckVar1 = IntVar()
+
+    C1 = Checkbutton(
+        root,
+        text="Cos1",
+        activebackground="black",
+        activeforeground="white",
+        variable=CheckVar1,
+        onvalue=1,
+        offvalue=0
+        # command=
+    )
+    C1.pack()
 
 # Del function
 
@@ -52,6 +71,54 @@ def delete_img():
     path_list = DIR_PATH.glob("*")
     for f in path_list:
         f.unlink()
+
+def sure():
+
+    # Are_u_Sure label
+
+    root = tk.Tk()
+    root.geometry('300x150')
+    root.resizable(True, True)
+    root.configure(bg="ghost white")
+    root.title('Are u sure ?')
+
+    w = tk.Label(root, text="Are u sure?")
+    w.configure(bg="ghost white")
+    w.pack()
+
+    cancel_button = tk.Button(
+        root,
+        text="Cancel",
+        fg='white',
+        bd=0,
+        bg='#1B8697',
+        activebackground='#3192a1',
+        command=root.destroy
+    )
+
+    cancel_button.pack(
+        ipadx=5,
+        ipady=5,
+        expand=True
+    )
+
+    exit_button = tk.Button(
+        root,
+        text="Exit",
+        fg='white',
+        bd=0,
+        bg='#1B8697',
+        activebackground='#3192a1',
+        command=exit
+    )
+
+    exit_button.pack(
+        ipadx=5,
+        ipady=5,
+        expand=True
+    )
+
+    root.mainloop()
 
 # photo label
 
@@ -69,7 +136,7 @@ screen_width = root.winfo_screenwidth()
 root.geometry(f'{screen_width}x{screen_height}')
 root.resizable(True, True)
 root.title('Do a photo')
-root.configure(bg="snow1")
+root.configure(bg="ghost white")
 # root.attributes('-alpha',1)
 
 # Frames
@@ -89,21 +156,23 @@ bottom.pack(
     fill='both',
     pady=screen_height/10
 )
-top.configure(bg="snow1") ##
-bottom.configure(bg="snow1") ##
+top.configure(bg="ghost white")
+bottom.configure(bg="ghost white")
 
 # photo button
 img_button = tk.Button(
     top,
-    text='Do a photo',
-    bg='LightCyan3',
-    activebackground='LightCyan2',
-    borderwidth='3',
+    fg='white',
+    bd=0,
+    text='Take a photo',
+    bg='#1B8697',
+    activebackground='#3192a1',
     command=jd,
+    width=20
 )
 img_button.pack(
-    ipadx=screen_width/35,
-    ipady=screen_height / 35,
+    ipadx=screen_width / 55,
+    ipady=screen_height / 55,
     expand=True,
     side='left'
 )
@@ -112,50 +181,60 @@ img_button.pack(
 
 show_button = tk.Button(
     top,
-    text='Show me a photo',
-    bg='LightCyan3',
-    activebackground='LightCyan2',
-    borderwidth='3',
-    command=show_photo
-
-
+    fg='white',
+    bd=0,
+    text='Show photo',
+    bg='#1B8697',
+    activebackground='#3192a1',
+    command=show_photo,
+    width=20
 )
+
 show_button.pack(
-    ipadx=screen_width/35,
-    ipady=screen_height / 35,
+    ipadx=screen_width/ 55,
+    ipady=screen_height / 55,
     # expand=True,
     side='left'
 )
 # Delete button
 del_button = tk.Button(
     top,
+    fg='white',
+    bd=0,
     text='Delete all photos',
-    bg='LightCyan3',
-    activebackground='LightCyan2',
-    borderwidth='3',
-    command=delete_img
+    bg='#1B8697',
+    activebackground='#3192a1',
+    command=delete_img,
+    width=20
 )
+
 del_button.pack(
-    ipadx=screen_width / 35,
-    ipady=screen_height / 35,
+    ipadx=screen_width / 55,
+    ipady=screen_height / 55,
     expand=True,
     side='left'
 )
+# Display img
 
-# quit button
-exit_button = tk.Button(
-    bottom,
-    text='Exit',
-    bg='LightCyan3',
-    activebackground='LightCyan2',
-    borderwidth='3',
-    width=10,
-    command=root.destroy
+disp_img = tk.Label()
+disp_img.pack(
+    pady=20
 )
 
-exit_button.pack(
-    ipadx=screen_width / 35,
-    ipady=screen_height / 35,
+# quit button
+quit_button = tk.Button(
+    bottom,
+    fg='white',
+    bd=0,
+    text='Exit',
+    bg='#E7624F',
+    activebackground='#e97160',
+    command=sure,
+    width=20
+)
+quit_button.pack(
+    ipadx=screen_width / 55,
+    ipady=screen_height / 55,
     expand=True
 )
 
