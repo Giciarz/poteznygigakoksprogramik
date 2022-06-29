@@ -1,11 +1,9 @@
-
-
 from time import sleep
 import tkinter as tk
 from pathlib import Path
-from PIL import Image
+# from PIL import Image
 
-from picamera import PiCamera
+# from picamera import PiCamera
 
 DIR_PATH = Path('./Fotki')
 
@@ -74,40 +72,63 @@ root.title('Do a photo')
 root.configure(bg="snow1")
 # root.attributes('-alpha',1)
 
+# Frames
+
+top = tk.Frame(root)
+bottom = tk.Frame(root)
+
+top.pack(
+    side='top',
+    fill='both',
+    padx=1,
+    pady=screen_height/10
+)
+
+bottom.pack(
+    side='bottom',
+    fill='both',
+    pady=screen_height/10
+)
+top.configure(bg="snow1") ##
+bottom.configure(bg="snow1") ##
+
 # photo button
 img_button = tk.Button(
-    root,
+    top,
     text='Do a photo',
     bg='LightCyan3',
     activebackground='LightCyan2',
     borderwidth='3',
-    command=jd
+    command=jd,
 )
 img_button.pack(
     ipadx=screen_width/35,
     ipady=screen_height / 35,
-    expand=True
+    expand=True,
+    side='left'
 )
 
 # Show me photo
 
 show_button = tk.Button(
-    root,
+    top,
     text='Show me a photo',
     bg='LightCyan3',
     activebackground='LightCyan2',
     borderwidth='3',
     command=show_photo
 
+
 )
 show_button.pack(
     ipadx=screen_width/35,
     ipady=screen_height / 35,
-    expand=True
+    # expand=True,
+    side='left'
 )
 # Delete button
 del_button = tk.Button(
-    root,
+    top,
     text='Delete all photos',
     bg='LightCyan3',
     activebackground='LightCyan2',
@@ -117,16 +138,18 @@ del_button = tk.Button(
 del_button.pack(
     ipadx=screen_width / 35,
     ipady=screen_height / 35,
-    expand=True
+    expand=True,
+    side='left'
 )
 
 # quit button
 exit_button = tk.Button(
-    root,
+    bottom,
     text='Exit',
     bg='LightCyan3',
     activebackground='LightCyan2',
     borderwidth='3',
+    width=10,
     command=root.destroy
 )
 
@@ -135,6 +158,17 @@ exit_button.pack(
     ipady=screen_height / 35,
     expand=True
 )
+
+print("""\
+                                       ._ o o
+                                       \_`-)|_
+                                    ,""       \ 
+                                  ,"  ## |   ಠ ಠ. 
+                                ," ##   ,-\__    `.
+                              ,"       /     `--._;)
+                            ,"     ## /
+                          ,"   ##    /
+                    """)
 
 if __name__ == "__main__":
     root.mainloop()
